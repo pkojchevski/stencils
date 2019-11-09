@@ -1,0 +1,45 @@
+.react-datepicker-wrapper {
+  position: relative;
+  // margin-left: 20px;
+  width: 100%;
+}
+
+.react-datepicker-label {
+  font-size: 12px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 10px;
+  top: 10px;
+  transition: 300ms ease all;
+
+  &.shrink {
+  }
+}
+
+.react-datepicker__input-container {
+  background: none;
+  background-color: white;
+  font-size: 12px;
+  // padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  padding: 5px;
+  border-radius: 0;
+  border-bottom: 1px solid gray;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus ~ label {
+  }
+
+  & input {
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
+}

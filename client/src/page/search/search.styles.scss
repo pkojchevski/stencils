@@ -1,0 +1,21 @@
+.search-absolute-wrapper {
+  margin-top: 65px;
+  position: absolute;
+  width: 100%;
+}
+
+.search-page {
+  width: 50%;
+  height: 50%;
+  //   border: 1px solid green;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.65);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.65);
+}
+
+.search-page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

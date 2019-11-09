@@ -1,0 +1,65 @@
+@import "./colors.scss";
+
+.icon-wrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  transition: all 0.4s ease-in;
+  cursor: pointer;
+  span[class^="icon"] {
+    position: relative;
+  }
+
+  & .icon-search {
+    width: 2rem;
+    height: 2rem;
+    background-image: url(../icons/search.svg);
+  }
+
+  & .icon-list {
+    width: 2rem;
+    height: 2rem;
+    background-image: url(../icons/list.svg);
+  }
+
+  & .icon-add {
+    width: 1.8rem;
+    height: 1.8rem;
+    background-image: url(../icons/plus.svg);
+  }
+
+  & .icon-cancel {
+    width: 2rem;
+    height: 2rem;
+    background-image: url(../icons/cancel.svg);
+  }
+
+  & .icon-edit {
+    width: 2rem;
+    height: 2rem;
+    background-image: url(../icons/pencil.svg);
+  }
+
+  & .icon-delete {
+    width: 2rem;
+    height: 2rem;
+    background-image: url(../icons/trash.svg);
+  }
+
+  & .icon-store {
+    width: 2rem;
+    height: 2rem;
+    background-image: url(../icons/archive.svg);
+  }
+
+  & .icon-stored {
+    color: $red;
+    width: 2rem;
+    height: 2rem;
+    background-image: url(../icons/archived.svg);
+  }
+}

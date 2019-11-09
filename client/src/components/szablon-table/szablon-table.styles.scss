@@ -1,0 +1,26 @@
+.table {
+  overflow-y: hidden;
+  & tr th {
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .table-bordered td,
+  .table-bordered th {
+    border: 1px solid $primary;
+  }
+}
+
+.icons-in-table {
+  &:focus {
+    cursor: pointer;
+  }
+  // transition: all 0.5s ease-out;
+  & svg {
+    & :focus {
+      transform: scale(1.5);
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@import "../../assets/styles/colors.scss";
+
+.table-absolute-wrapper {
+  margin-top: 65px;
+  position: absolute;
+  width: 100%;
+}
+
+.table-container {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  width: 90%;
+  overflow-y: hidden;
+
+  & .add-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 0px;
+    left: 50%;
+    cursor: pointer;
+  }
+
+  // & .icon {
+  //   width: 20px;
+  //   height: 20px;
+  //   margin: auto;
+  //   cursor: pointer;
+  // }
+}

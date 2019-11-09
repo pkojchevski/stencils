@@ -1,0 +1,15 @@
+@import-normalize;
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../src/assets/fonts/Lato-Regular.ttf");
+}
+
+body {
+  font-family: "Lato";
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
