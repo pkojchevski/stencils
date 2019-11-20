@@ -1,4 +1,8 @@
-import React, { useEffect, useState, PropTypes } from "react";
+import React, { useEffect, useState } from "react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import pl from "date-fns/locale/pl";
+
+import DatepickerInput from "../date-picker-input/date-picker-input.component";
 
 import { connect } from "react-redux";
 
@@ -10,26 +14,22 @@ import FormTextArea from "../form-textarea/form-textarea.component";
 import {
   AddEditFormContainer,
   AddEditFormTitle,
-  AddEditFormButtons,
-  CancelIconContainer
+  AddEditFormButtons
 } from "./add-edit-form.styles";
 
 import { selectSzablonForEdit } from "../../redux/szablon/szablon.selector";
 
 import FormInput from "../form-input/form-input.component";
-
-import DatePickerInput from "../date-picker-input/date-picker-input.component";
-
 import { ReactComponent as OkIcon } from "../../assets/icons/ok.svg";
 import { ReactComponent as CancelIcon } from "../../assets/icons/cancel.svg";
-import { formatDate } from "../../mysql-utils/mysql-utils";
 import { isEmptyObj } from "../../utility/utility";
 import {
   updateSzablonStart,
   getAllSzablonsStart,
-  addSzablonStart,
-  deleteSzablonStart
+  addSzablonStart
 } from "../../redux/szablon/szablon.action";
+
+registerLocale("pl", pl);
 
 const AddEditForm = ({
   szablonForEdit,
@@ -38,6 +38,7 @@ const AddEditForm = ({
   addSzablonStart,
   toggle
 }) => {
+  const [startDate, setStartDate] = useState(new Date());
   const [szablon, setSzablon] = useState({ ...szablonForEdit });
   useEffect(() => {
     setSzablon({ ...szablonForEdit });
@@ -53,6 +54,14 @@ const AddEditForm = ({
     toggle();
   };
 
+  const setDateOnDatePicker = date => {
+    setStartDate(date);
+    setSzablon(prevState => ({
+      ...prevState,
+      Data_przyjecia: new Date(date)
+    }));
+  };
+
   const handleChange = event => {
     const { value, name } = event.target;
     setSzablon(prevState => {
@@ -60,14 +69,10 @@ const AddEditForm = ({
     });
   };
 
-  const handleCancelClick = () => {
-    toggle();
-  };
-
   return (
     <AddEditFormContainer>
       <AddEditFormTitle>
-        <h3>Add/Edit Szablon</h3>
+        {isEdit ? <h3>Edit Szablon</h3> : <h3>Add Szablon</h3>}
       </AddEditFormTitle>
       <hr></hr>
       {!isEmptyObj(szablon) ? (
@@ -119,12 +124,22 @@ const AddEditForm = ({
               label="Pcb"
               required
             />
-            <DatePickerInput
+            {/* <DatePickerInput
               name="Data_przyjecia"
-              date={formatDate(szablon.Data_przyjecia)}
+              date={szablon.Data_przyjecia}
               onChange={e => handleChange(e)}
-              value={formatDate(szablon.Data_przyjecia)}
+              value={szablon.Data_przyjecia}
               label="date"
+            /> */}
+            <DatePicker
+              selected={szablon.Data_przyjecia}
+              onChange={e => setDateOnDatePicker(e)}
+              todayButton="Dzisiaj"
+              locale="pl"
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
             />
             <FormTextArea
               name="Uwagi"

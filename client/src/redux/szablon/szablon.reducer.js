@@ -5,7 +5,9 @@ const INITIAL_STATE = {
   isFetching: false,
   errorMessage: null,
   szablonForEdit: null,
-  searchValue: null
+  searchValue: null,
+  pcb: null,
+  szablonyForPcb: null
 };
 
 const szablonReducer = (state = INITIAL_STATE, action) => {
@@ -124,6 +126,26 @@ const szablonReducer = (state = INITIAL_STATE, action) => {
       };
 
     case SzablonyActionTypes.STORE_SZABLON_ERROR:
+      return {
+        ...state,
+        errorMessage: action.payload
+      };
+
+    case SzablonyActionTypes.GET_SZABLON_FOR_PCB_START:
+      return {
+        ...state,
+        isFetching: true,
+        pcb: action.payload
+      };
+
+    case SzablonyActionTypes.GET_SZABLON_FOR_PCB_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        szablonyForPcb: action.payload
+      };
+
+    case SzablonyActionTypes.GET_SZABLON_FOR_PCB_ERROR:
       return {
         ...state,
         errorMessage: action.payload

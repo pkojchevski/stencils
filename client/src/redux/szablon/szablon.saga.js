@@ -2,7 +2,6 @@ import { takeLatest, all, call, put } from "redux-saga/effects";
 import { SzablonyActionTypes } from "./szablon.types";
 
 import API from "../../axios/api";
-import axios from "axios";
 
 import {
   getAllSzablonsSuccess,
@@ -17,7 +16,9 @@ import {
   searchSzablonsFromTableSuccess,
   searchSzablonsFromTableError,
   storeSzablonSuccess,
-  storeSzablonError
+  storeSzablonError,
+  getSzablonForPcbError,
+  getSzablonForPcbSuccess
 } from "./szablon.action";
 
 export function* fetchSzablonyAsync() {
@@ -25,7 +26,6 @@ export function* fetchSzablonyAsync() {
     let response = yield API.get("szablony");
     if (response.status === 200) {
       let szablony = response.data;
-      console.log(szablony);
       yield put(getAllSzablonsSuccess(szablony));
     }
   } catch (err) {
@@ -34,7 +34,6 @@ export function* fetchSzablonyAsync() {
 }
 
 export function* fetchSablonyStart() {
-  console.log("saga fetc all");
   yield takeLatest(
     SzablonyActionTypes.GET_ALL_SZABLONS_START,
     fetchSzablonyAsync
@@ -133,6 +132,25 @@ export function* onStoreSzablon() {
   );
 }
 
+export function* onGetSzablonPcbAsync({ payload: pcb }) {
+  try {
+    let response = yield API.get(`szablon/pcb/${pcb}`);
+    if (response.status === 200) {
+      let szablony = response.data;
+      yield put(getSzablonForPcbSuccess(szablony));
+    }
+  } catch (err) {
+    yield put(getSzablonForPcbError());
+  }
+}
+
+export function* onGetSzablonForPcb() {
+  yield takeLatest(
+    SzablonyActionTypes.GET_SZABLON_FOR_PCB_START,
+    onGetSzablonPcbAsync
+  );
+}
+
 export function* szablonSagas() {
   yield all([
     call(fetchSablonyStart),
@@ -140,6 +158,7 @@ export function* szablonSagas() {
     call(onAddSzablonStart),
     call(onDeleteSzablonStart),
     call(onSearchSzablonTableStart),
-    call(onStoreSzablon)
+    call(onStoreSzablon),
+    call(onGetSzablonForPcb)
   ]);
 }

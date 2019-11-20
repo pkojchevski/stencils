@@ -89,3 +89,18 @@ export const storeSzablonError = error => ({
   type: SzablonyActionTypes.STORE_SZABLON_ERROR,
   payload: error
 });
+
+export const getSzablonForPcbStart = pcb => ({
+  type: SzablonyActionTypes.GET_SZABLON_FOR_PCB_START,
+  payload: pcb
+});
+
+export const getSzablonForPcbError = error => ({
+  type: SzablonyActionTypes.GET_SZABLON_FOR_PCB_ERROR,
+  payload: error
+});
+
+export const getSzablonForPcbSuccess = szablon => ({
+  type: SzablonyActionTypes.GET_SZABLON_FOR_PCB_SUCCESS,
+  payload: szablon
+});

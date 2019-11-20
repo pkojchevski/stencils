@@ -11,7 +11,7 @@ import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 const SearchInput = ({ label, handleChange, ...props }) => {
   return (
     <SearchGroupContainer>
-      <SearchIcon style={{ width: "20px", height: "20px" }} />
+      <SearchIcon style={{ width: "25px", height: "25px" }} />
       {/* <div className="icon icon-search" /> */}
       <SearchInputContainer onChange={handleChange} {...props} />
       {label ? (

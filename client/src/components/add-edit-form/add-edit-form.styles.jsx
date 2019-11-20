@@ -12,7 +12,7 @@ export const AddEditFormTitle = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  color: #ca3c25;
+  color: #110133;
 `;
 
 export const AddEditFormButtons = styled.div`

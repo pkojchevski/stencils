@@ -1,12 +1,10 @@
 import styled, { css } from "styled-components";
 
-const subColor = "grey";
-const mainColor = "black";
 
 const shrinkLabelStyle = css`
   top: -14px;
   font-size: 10px;
-  color: ${mainColor};
+  color: #4dd599;
 `;
 
 export const FormGroupContainer = styled.div`
@@ -16,18 +14,24 @@ export const FormGroupContainer = styled.div`
 
 export const FormInputContainer = styled.input`
   background: none;
-  // background-color: white;
-  color: ${subColor};
+  color: #110133;
   font-size: 14px;
   display: block;
   width: 100%;
   border: none;
   border-radius: 0;
-  border-bottom: 1px solid ${subColor};
+  border-bottom: 1px solid #110133;
   margin: 25px auto;
   padding-left: 5px;
+  transition: 300ms ease out;
+
   &:focus {
     outline: none;
+  }
+
+
+  &:focus ~ span {
+    transform: scale(1);
   }
 
   &:focus ~ label {
@@ -36,7 +40,7 @@ export const FormInputContainer = styled.input`
 `;
 
 export const FormInputLabel = styled.label`
-  color: ${subColor};
+  color: #110133;
   font-size: 12px;
   font-weight: normal;
   position: absolute;
@@ -48,4 +52,15 @@ export const FormInputLabel = styled.label`
   &.shrink {
     ${shrinkLabelStyle}
   }
+`;
+
+export const LineSpan = styled.span`
+background-color: #ffdc34;
+height: 2px;
+position: absolute;
+transform: scale(0,1);
+transition: all 0.5s linear;
+width: 100%;
+z-index: 10;
+top: 1.42em;
 `;

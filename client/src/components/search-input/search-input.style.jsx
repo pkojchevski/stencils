@@ -37,8 +37,8 @@ export const SearchInputLabel = styled.label`
   font-weight: normal;
   position: absolute;
   pointer-events: none;
-  left: 20px;
-  top: 0px;
+  left: 30px;
+  top: 0;
   transition: 300ms ease all;
 
   &.shrink {

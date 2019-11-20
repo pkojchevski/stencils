@@ -22,10 +22,12 @@ export const selectIsSzablonyLoaded = createSelector(
   szablon => !!szablon.szablony
 );
 
-const getSzablon = (state, props) =>
-  state.szablon.szablony.find(el => el.id === props.id);
-
 export const selectSzablonForEdit = createSelector(
   [selectSzablon],
   szablon => szablon.szablonForEdit
+);
+
+export const selectSzablonForPcb = createSelector(
+  [selectSzablon],
+  szablon => szablon.szablonyForPcb
 );

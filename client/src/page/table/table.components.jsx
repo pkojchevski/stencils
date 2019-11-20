@@ -22,16 +22,15 @@ import useToggle from "../../components/hooks/useToggle";
 
 import { useSpring, animated } from "react-spring";
 
-
 const TablePage = ({
   getAllSzablonsStart,
   getSzablon,
-  szablony,
-  searchSzablonsFromTableStart
+  searchSzablonsFromTableStart,
+  szablony
 }) => {
   useEffect(() => {
     getAllSzablonsStart();
-  }, [szablony]);
+  }, [getAllSzablonsStart]);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -41,10 +40,10 @@ const TablePage = ({
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useToggle(false);
 
   const addClickHandler = () => {
-    setOpenAddEdit();
+    setOpenAddEdit(true);
     setIsEdit(false);
     getSzablon({
-      Data_przyjecia: new Date().toISOString(),
+      Data_przyjecia: new Date(),
       IndeksPCB: "",
       KodSzablonu: "",
       Nazwa: "",
@@ -55,7 +54,7 @@ const TablePage = ({
   };
 
   const handleChange = e => {
-    const { value, name } = e.target;
+    const { value } = e.target;
     setSearchValue(value);
     searchSzablonsFromTableStart(searchValue);
   };
@@ -78,7 +77,11 @@ const TablePage = ({
           value={searchValue}
           onChange={e => handleChange(e)}
         />
-        <div className="icon icon-add" onClick={e => addClickHandler(e)} />
+        <AddIcon
+          className="add-icon"
+          style={{ width: "30px", height: "30px" }}
+          onClick={e => addClickHandler(e)}
+        />
         <Modal show={openAddEdit}>
           <AddEditForm isEdit={isEdit} toggle={toggleAddEdit}></AddEditForm>
         </Modal>

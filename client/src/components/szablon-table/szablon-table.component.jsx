@@ -18,6 +18,8 @@ import {
   storeSzablonStart
 } from "../../redux/szablon/szablon.action";
 
+import { formatDate } from "../../mysql-utils/mysql-utils";
+
 const SzablonTable = ({
   szablony,
   getSzablon,
@@ -26,7 +28,10 @@ const SzablonTable = ({
   storeSzablonStart
 }) => {
   const handleEditClick = szablon => {
-    getSzablon(szablon);
+    getSzablon({
+      ...szablon,
+      Data_przyjecia: formatDate(szablon.Data_przyjecia)
+    });
     toggleEditModal();
   };
 
@@ -47,8 +52,6 @@ const SzablonTable = ({
             {COLUMN_DATA.map((column, index) => (
               <th key={index}>{column}</th>
             ))}
-            <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -67,7 +70,7 @@ const SzablonTable = ({
                   </td>
                   <td>{column.Uwagi}</td>
                   <td>
-                    <div class="icons-in-table">
+                    <div className="icons-in-table">
                       <EditIcon
                         onClick={() => handleEditClick(column)}
                         style={{

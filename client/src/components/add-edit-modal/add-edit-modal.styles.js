@@ -23,9 +23,9 @@ const Container = styled.div`
       border: 1px solid #110133;
       transform: translate(-50%, -50%);
       border: 1px solid $border-color;
-      -moz-box-shadow: inset 0 0 25px #e6aa68;
-      -webkit-box-shadow: inset 0 0 25px #e6aa68;
-      box-shadow: inset 0 0 25px #e6aa68;
+      -moz-box-shadow: inset 0 0 25px #00918e;
+      -webkit-box-shadow: inset 0 0 25px #00918e;
+      box-shadow: inset 0 0 25px #00918e;
     }
   }
 `;
