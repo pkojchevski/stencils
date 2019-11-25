@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 
-
 const shrinkLabelStyle = css`
   top: -14px;
   font-size: 10px;
@@ -9,7 +8,7 @@ const shrinkLabelStyle = css`
 
 export const FormGroupContainer = styled.div`
   position: relative;
-  /* margin: 0 20px; */
+  /* margin: 25px auto; */
 `;
 
 export const FormInputContainer = styled.input`
@@ -28,7 +27,6 @@ export const FormInputContainer = styled.input`
   &:focus {
     outline: none;
   }
-
 
   &:focus ~ span {
     transform: scale(1);
@@ -55,12 +53,21 @@ export const FormInputLabel = styled.label`
 `;
 
 export const LineSpan = styled.span`
-background-color: #ffdc34;
-height: 2px;
-position: absolute;
-transform: scale(0,1);
-transition: all 0.5s linear;
-width: 100%;
-z-index: 10;
-top: 1.42em;
+  background-color: #ffdc34;
+  height: 1.8px;
+  position: absolute;
+  -webkit-transform: scale(0, 1);
+  -ms-transform: scale(0, 1);
+  transform: scale(0, 1);
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
+  width: 100%;
+  z-index: 10;
+  top: 1.42em;
+`;
+
+export const FormInputError = styled.div`
+  color: red;
+  font-size: 12px;
+  font-style: italic;
 `;

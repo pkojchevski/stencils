@@ -5,3 +5,6 @@ export const isEmptyObj = obj => {
 
   return true;
 };
+
+export const getInitials = str =>
+  (str.split(".")[0] + str.split(".")[1].split("")[0]).toUpperCase();

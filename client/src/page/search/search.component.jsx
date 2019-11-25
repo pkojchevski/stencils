@@ -17,9 +17,8 @@ const SearchPage = ({ getSzablonForPcbStart }) => {
   };
 
   return (
-    <div className="search-absolute-wrapper">
+    <div className="search-page-absolute-wrapper">
       <div className="search-page">
-        {/* <div className="search-page-title">Szukaj szablony</div> */}
         <div className="search-page-content">
           <input
             type="text"
@@ -40,7 +39,4 @@ const mapDispatchToProps = dispatch => ({
   getSzablonForPcbStart: pcb => dispatch(getSzablonForPcbStart(pcb))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SearchPage);
+export default connect(null, mapDispatchToProps)(SearchPage);

@@ -1,7 +1,7 @@
 import { takeLatest, all, call, put } from "redux-saga/effects";
 import { SzablonyActionTypes } from "./szablon.types";
 
-import API from "../../axios/api";
+import { API } from "../../axios/api";
 
 import {
   getAllSzablonsSuccess,

@@ -1,10 +1,13 @@
 import { UserActionTypes } from "./user.types";
+import { isEmptyObj, getInitials } from "../../utility/utility";
 
 const INITIAL_STATE = {
   currentUser: null,
   isFetching: false,
   error: null,
-  session: null
+  session: null,
+  isAuth: false,
+  initials: null
 };
 
 export const userReducer = (state = INITIAL_STATE, action) => {
@@ -26,18 +29,56 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
 
-    case UserActionTypes.GET_USER_FROM_ID_START:
+    case UserActionTypes.GET_CURRENT_USER_START:
       return {
         ...state,
         isFetching: true
       };
-    case UserActionTypes.GET_USER_FROM_ID_SUCCESS:
+    case UserActionTypes.GET_CURRENT_USER_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        currentUser: action.payload
+        currentUser: action.payload,
+        isAuth: !isEmptyObj(action.payload),
+        initials: getInitials(action.payload.username)
       };
-    case UserActionTypes.GET_USER_FROM_ID_ERROR:
+    case UserActionTypes.GET_CURRENT_USER_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
+    case UserActionTypes.GET_CURRENT_USER_START:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case UserActionTypes.GET_CURRENT_USER_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        currentUser: action.payload,
+        isAuth: !isEmptyObj(action.payload)
+      };
+    case UserActionTypes.GET_CURRENT_USER_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
+
+    case UserActionTypes.SIGNOUT_START:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case UserActionTypes.SIGNOUT_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        currentUser: null,
+        isAuth: false,
+        initials: null
+      };
+    case UserActionTypes.GET_CURRENT_USER_ERROR:
       return {
         ...state,
         error: action.payload

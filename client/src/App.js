@@ -13,16 +13,15 @@ import TablePage from "./page/table/table.components";
 import SearchPage from "./page/search/search.component.jsx";
 import SigninPage from "./page/signin/signin.component";
 
-import { selectCurrentUser } from "./redux/user/user.selector";
+import { selectCurrentUser, selectIsAuth } from "./redux/user/user.selector";
 
-const App = ({ currentUser }) => {
+const App = ({ currentUser, isAuth }) => {
   const { location } = useContext(__RouterContext);
   const transitions = useTransition(location, location => location.pathname, {
     from: { opacity: 0, transform: "translate(100%, 0)" },
     enter: { opacity: 1, transform: "translate(0%, 0)" },
     leave: { opacity: 0, transform: "translate(50%, 0)" }
   });
-  console.log("currentUser:", currentUser);
 
   return (
     <main className="app-container">
@@ -30,15 +29,25 @@ const App = ({ currentUser }) => {
       {transitions.map(({ item, props, key }) => (
         <animated.div key={key} style={props}>
           <Switch location={item}>
-            <Route exact path="/" component={TablePage} />
-            <Route exact path="/table" component={TablePage} />
+            <Route
+              exact
+              path="/"
+              render={() =>
+                isAuth ? <TablePage /> : <Redirect to="/signin" />
+              }
+            />
+            <Route
+              exact
+              path="/table"
+              render={() =>
+                isAuth ? <TablePage /> : <Redirect to="/signin" />
+              }
+            />
             <Route exact path="/search" component={SearchPage} />
             <Route
               exact
               path="/signin"
-              render={() =>
-                currentUser ? <Redirect to="/" /> : <SigninPage />
-              }
+              render={() => (isAuth ? <Redirect to="/" /> : <SigninPage />)}
             />
           </Switch>
         </animated.div>
@@ -48,7 +57,8 @@ const App = ({ currentUser }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  isAuth: selectIsAuth
 });
 
 export default connect(mapStateToProps)(App);

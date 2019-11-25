@@ -4,10 +4,11 @@ import {
   FormGroupContainer,
   FormInputContainer,
   FormInputLabel,
-  LineSpan
+  LineSpan,
+  FormInputError
 } from "./form-input.styles.jsx";
 
-const FormInput = ({ handleChange, label, ...props }) => (
+const FormInput = ({ handleChange, label, error, ...props }) => (
   <FormGroupContainer>
     <FormInputContainer onChange={handleChange} {...props} />
     <LineSpan></LineSpan>
@@ -16,6 +17,7 @@ const FormInput = ({ handleChange, label, ...props }) => (
         {label}
       </FormInputLabel>
     ) : null}
+    {error ? <FormInputError>{error}</FormInputError> : null}
   </FormGroupContainer>
 );
 

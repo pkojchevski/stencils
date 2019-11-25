@@ -1,17 +1,17 @@
 import { UserActionTypes } from "./user.types";
 
-export const getUserFromIdStart = userId => ({
-  type: UserActionTypes.GET_USER_FROM_ID_START,
-  payload: userId
+export const getCurrentUserStart = token => ({
+  type: UserActionTypes.GET_CURRENT_USER_START,
+  payload: token
 });
 
-export const getUserFromIdSuccess = currentUser => ({
-  type: UserActionTypes.GET_USER_FROM_ID_SUCCESS,
-  payload: currentUser
+export const getCurrentUserSuccess = currUser => ({
+  type: UserActionTypes.GET_CURRENT_USER_SUCCESS,
+  payload: currUser
 });
 
-export const getUserFromIdError = error => ({
-  type: UserActionTypes.GET_USER_FROM_ID_ERROR,
+export const getCurrentUserError = error => ({
+  type: UserActionTypes.GET_CURRENT_USER_ERROR,
   payload: error
 });
 
@@ -26,6 +26,19 @@ export const signinSuccess = session => ({
 });
 
 export const signinError = error => ({
+  type: UserActionTypes.SIGNIN_ERROR,
+  payload: error
+});
+
+export const signoutStart = () => ({
+  type: UserActionTypes.SIGNOUT_START
+});
+
+export const signoutSuccess = () => ({
+  type: UserActionTypes.SIGNOUT_SUCCESS
+});
+
+export const signoutError = error => ({
   type: UserActionTypes.SIGNIN_ERROR,
   payload: error
 });

@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
+import classnames from "classnames";
+
 import "./signin.styles.scss";
 import FormInput from "../../components/form-input/form-input.component";
 
 import { signinStart } from "../../redux/user/user.actions";
 
-export const SigninPage = ({ signinStart }) => {
+import {
+  selectCurrentUser,
+  selectErrors
+} from "../../redux/user/user.selector";
+
+import { createStructuredSelector } from "reselect";
+
+export const SigninPage = ({ signinStart, currentUser, error }) => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: ""
@@ -31,15 +40,16 @@ export const SigninPage = ({ signinStart }) => {
             onChange={e => handleChange(e)}
             value={credentials.username}
             label="username"
-            required
+            error={error ? error.username : ""}
           />
+
           <FormInput
             name="password"
             type="password"
             onChange={e => handleChange(e)}
             value={credentials.password}
             label="password"
-            required
+            error={error ? error.password : ""}
           />
           <button type="submit" className="form-signin-button">
             signin
@@ -50,8 +60,13 @@ export const SigninPage = ({ signinStart }) => {
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  error: selectErrors
+});
+
 const mapDispatchToProps = dispatch => ({
   signinStart: username => dispatch(signinStart(username))
 });
 
-export default connect(null, mapDispatchToProps)(SigninPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SigninPage);

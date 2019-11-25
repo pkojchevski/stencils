@@ -4,23 +4,26 @@ import { UserActionTypes } from "./user.types";
 import {
   signinSuccess,
   signinError,
-  getUserFromIdError,
-  getUserFromIdStart,
-  getUserFromIdSuccess
+  getCurrentUserError,
+  getCurrentUserStart,
+  getCurrentUserSuccess,
+  signoutSuccess
 } from "./user.actions";
 
-import API from "../../axios/api";
+import { API, setAuthToken } from "../../axios/api";
 
 export function* onSigninAsync({ payload: credentials }) {
   try {
     const response = yield API.post("signin", credentials);
     if (response.status === 200) {
-      const session = response.data;
-      yield put(signinSuccess(session));
-      yield put(getUserFromIdStart(session.userId));
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+      yield setAuthToken(token);
+      yield put(signinSuccess(token));
+      yield put(getCurrentUserStart());
     }
   } catch (err) {
-    yield put(signinError(err));
+    yield put(signinError(err.response.data));
   }
 }
 
@@ -28,25 +31,35 @@ export function* onSignin() {
   yield takeLatest(UserActionTypes.SIGNIN_START, onSigninAsync);
 }
 
-export function* onGetUserFromIdAsync({ payload: userId }) {
+export function* onGetCurrentUserAsync() {
   try {
-    const response = yield API.get(`user/${userId}`);
+    const response = yield API.get("auth");
     if (response.status === 200) {
       const currentUser = response.data;
-      yield put(getUserFromIdSuccess(currentUser));
+      yield put(getCurrentUserSuccess(currentUser));
     }
   } catch (err) {
-    yield put(getUserFromIdError(err));
+    yield put(getCurrentUserError(err));
   }
 }
 
-export function* onGetUserFromId() {
+export function* onGetCurrentUser() {
   yield takeLatest(
-    UserActionTypes.GET_USER_FROM_ID_START,
-    onGetUserFromIdAsync
+    UserActionTypes.GET_CURRENT_USER_START,
+    onGetCurrentUserAsync
   );
 }
 
+export function* onGetSignoutAsync() {
+  yield localStorage.removeItem("token");
+  yield setAuthToken(false);
+  yield put(signoutSuccess());
+}
+
+export function* onSignout() {
+  yield takeLatest(UserActionTypes.SIGNOUT_START, onGetSignoutAsync);
+}
+
 export function* userSagas() {
-  yield all([call(onSignin), call(onGetUserFromId)]);
+  yield all([call(onSignin), call(onGetCurrentUser), call(onSignout)]);
 }
