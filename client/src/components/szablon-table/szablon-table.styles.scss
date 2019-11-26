@@ -1,5 +1,11 @@
-.table {
+@import "../../assets/styles/colors.scss";
+
+.szablon-table {
   overflow-y: hidden;
+  font-size: 12px;
+  font-style: italic;
+  color: $primary-blue;
+
   & tr th {
     text-transform: uppercase;
     text-align: center;
@@ -8,7 +14,7 @@
 
   .table-bordered td,
   .table-bordered th {
-    border: 1px solid $primary;
+    border: 1px solid $primary-blue;
   }
 }
 

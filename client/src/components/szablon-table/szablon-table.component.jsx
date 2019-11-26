@@ -19,6 +19,7 @@ import {
 } from "../../redux/szablon/szablon.action";
 
 import { formatDate } from "../../mysql-utils/mysql-utils";
+import "./szablon-table.styles.scss";
 
 const SzablonTable = ({
   szablony,
@@ -45,7 +46,7 @@ const SzablonTable = ({
   };
 
   return (
-    <div className="table">
+    <div className="szablon-table">
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -125,7 +126,4 @@ const mapDispatchToProps = dispatch => ({
   storeSzablonStart: szablon => dispatch(storeSzablonStart(szablon))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SzablonTable);
+export default connect(mapStateToProps, mapDispatchToProps)(SzablonTable);
