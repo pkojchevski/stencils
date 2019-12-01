@@ -23,7 +23,7 @@ export function* onSigninAsync({ payload: credentials }) {
       yield put(getCurrentUserStart());
     }
   } catch (err) {
-    yield put(signinError(err.response.data));
+    yield put(signinError(err));
   }
 }
 
