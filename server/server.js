@@ -21,21 +21,13 @@ app.use(passport.initialize());
 
 require("./controllers/passport")(passport);
 
-//load frontend files
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(_dirname, "client/build", "index.html"));
-// });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
 
-// const db = knex({
-//   client: "mysql",
-//   connection: {
-//     host: `${process.env.MYSQL_HOST}`,
-//     user: `${process.env.MYSQL_USER}`,
-//     password: `${process.env.MYSQL_PASSWORD}`,
-//     database: `${process.env.MYSQL_DATABASE}`,
-//     timezone: "utc"
-//   }
-// });
+  app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
 
 const port = process.env.PORT || 8080;
 
