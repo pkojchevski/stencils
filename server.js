@@ -21,6 +21,10 @@ app.use(passport.initialize());
 
 require("./controllers/passport")(passport);
 
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => console.log("Listening on:", port));
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
 
@@ -28,10 +32,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
-
-const port = process.env.PORT || 8080;
-
-app.listen(port, () => console.log("Listening on:", port));
 
 app.get("/szablony", szablon.getSzablony(mysql.db));
 
