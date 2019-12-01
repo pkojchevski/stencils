@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "https://szablony.herokuapp.com/"
+  baseURL: "https://localhost:8080/"
 });
 
 export const setAuthToken = token => {
