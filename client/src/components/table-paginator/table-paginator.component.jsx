@@ -8,6 +8,8 @@ import "./table-paginator.styles.scss";
 import { getSzablonPageStart } from "../../redux/szablon/szablon.action";
 import { selectMaxPages } from "../../redux/szablon/szablon.selector";
 
+const C = CSSPlugin;
+
 const TablePaginator = ({ getSzablonPageStart, pages }) => {
   let dotRef = useRef();
   const numItemsArr = Array.from(Array(pages).keys());
