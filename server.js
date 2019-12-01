@@ -4,6 +4,7 @@ const knex = require("knex");
 const cors = require("cors");
 require("dotenv").config();
 const passport = require("passport");
+const path = require("path");
 
 const store = require("./controllers/store");
 const auth = require("./controllers/auth");
