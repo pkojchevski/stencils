@@ -17,13 +17,14 @@ import SigninPage from "./page/signin/signin.component";
 import { selectCurrentUser, selectIsAuth } from "./redux/user/user.selector";
 import { getCurrentUserStart, signoutStart } from "./redux/user/user.actions";
 
-const App = ({ isAuth, getCurrentUserStart, dispatch }) => {
+const App = ({ isAuth, getCurrentUserStart, signoutStart }) => {
   useEffect(() => {
     if (localStorage.token) {
       const decode = jwt_decode(localStorage.token);
       // check if token expired
       if (decode.exp < Date.now() / 1000) {
-        dispatch(signoutStart());
+        signoutStart();
+        console.log("signout");
       } else {
         setAuthToken(localStorage.token);
         getCurrentUserStart(localStorage.token);
@@ -77,7 +78,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getCurrentUserStart: token => dispatch(getCurrentUserStart(token))
+  getCurrentUserStart: token => dispatch(getCurrentUserStart(token)),
+  signoutStart: () => dispatch(signoutStart())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

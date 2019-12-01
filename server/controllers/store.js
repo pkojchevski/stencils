@@ -1,18 +1,27 @@
 const handleStore = db => (req, res) => {
   const szablon = req.body;
-  // const column = getEmptyLocationForSzablon(db);
+  let newId;
   db.transaction(trx => {
     trx("Szablony")
       .whereNull("Nazwa")
       .whereNotNull("Pozycja")
       .first()
-      .then(emptySzablon => ({
-        ...szablon,
-        Pozycja: emptySzablon.Pozycja,
-        id: emptySzablon.id,
-        Data_przyjecia: szablon.Data_przyjecia.substring(0, 10)
-      }))
+      .then(emptySzablon => {
+        if (!emptySzablon) {
+          return res
+            .status(400)
+            .json({ errors: "There are no free positions" });
+        } else {
+          return {
+            ...szablon,
+            Pozycja: emptySzablon.Pozycja,
+            id: emptySzablon.id,
+            Data_przyjecia: szablon.Data_przyjecia.substring(0, 10)
+          };
+        }
+      })
       .then(newSzablon => {
+        newId = newSzablon.id;
         return trx("Szablony")
           .where({ id: newSzablon.id })
           .update({
@@ -22,7 +31,7 @@ const handleStore = db => (req, res) => {
             return trx("Szablony")
               .where({ id: szablon.id })
               .del()
-              .then(() => res.json("done!"));
+              .then(() => res.json(newId));
           });
       })
       .then(trx.commit)

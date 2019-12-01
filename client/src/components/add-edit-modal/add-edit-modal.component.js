@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { StyledModal } from "./add-edit-modal.styles.js";
-import { ReactComponent as CancelIcon } from "../../assets/icons/cancel.svg";
 
 import { useTransition, animated } from "react-spring";
 
 function Portal({ children }) {
   const modalRoot = document.getElementById("modal-root");
-  // const [element] = useState(document.createElement("div"));
   const mainDivRef = useRef(document.createElement("div"));
 
   useEffect(() => {
@@ -21,7 +19,7 @@ function Portal({ children }) {
         modalRoot.removeChild(mainDiv);
       }
     };
-  }, []);
+  }, [modalRoot]);
 
   return mainDivRef.current ? createPortal(children, mainDivRef.current) : null;
 }

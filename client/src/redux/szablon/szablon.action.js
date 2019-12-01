@@ -104,3 +104,47 @@ export const getSzablonForPcbSuccess = szablon => ({
   type: SzablonyActionTypes.GET_SZABLON_FOR_PCB_SUCCESS,
   payload: szablon
 });
+
+export const getSzablonPageStart = page => ({
+  type: SzablonyActionTypes.GET_SZABLON_PAGE_START,
+  payload: page
+});
+
+export const getSzablonPageError = error => ({
+  type: SzablonyActionTypes.GET_SZABLON_PAGE_ERROR,
+  payload: error
+});
+
+export const getSzablonPageSuccess = szablony => ({
+  type: SzablonyActionTypes.GET_SZABLON_PAGE_SUCCESS,
+  payload: szablony
+});
+
+export const getSzablonCountStart = () => ({
+  type: SzablonyActionTypes.GET_SZABLON_COUNT_START
+});
+
+export const getSzablonCountError = error => ({
+  type: SzablonyActionTypes.GET_SZABLON_COUNT_ERROR,
+  payload: error
+});
+
+export const getSzablonCountSuccess = count => ({
+  type: SzablonyActionTypes.GET_SZABLON_COUNT_SUCCESS,
+  payload: count
+});
+
+export const getSzablonAfterUpdateStart = id => ({
+  type: SzablonyActionTypes.GET_SZABLON_AFTER_UPDATE_START,
+  payload: id
+});
+
+export const getSzablonAfterUpdateError = error => ({
+  type: SzablonyActionTypes.GET_SZABLON_AFTER_UPDATE_ERROR,
+  payload: error
+});
+
+export const getSzablonAfterUpdateSuccess = szablon => ({
+  type: SzablonyActionTypes.GET_SZABLON_AFTER_UPDATE_SUCCESS,
+  payload: szablon
+});

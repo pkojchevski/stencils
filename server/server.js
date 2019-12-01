@@ -43,42 +43,17 @@ app.listen(port, () => console.log("Listening on:", port));
 
 app.get("/szablony", szablon.getSzablony(mysql.db));
 
+app.get("/szablony/count", szablon.countSzablony(mysql.db));
+
+app.get("/szablony/pages/:page", szablon.getSzablonyPages(mysql.db));
+
 app.get("/szablon/pcb/:pcb", szablon.getSzablonForPcb(mysql.db));
 
 app.get("/szablon/:id", szablon.getSzablonForId(mysql.db));
 
 app.put("/szablon/:id", szablon.updateSzablon(mysql.db));
 
-// async function updateSzablon(db, szablon) {
-//   return await db("Szablony")
-//     .where({ id: szablon.id })
-//     .update({
-//       ...szablon
-//     });
-// }
-
-app.post("/szablon", async (req, res) => {
-  const szablon = req.body;
-  const maxCounter = await getMaxCounter(mysql.db);
-  await db("Szablony")
-    .insert({
-      ...szablon,
-      KodSzablonu: maxCounter + 1,
-      Data_przyjecia: szablon.Data_przyjecia.substring(0, 10)
-    })
-    .then(response => res.json(response))
-    .catch(err => res.status(400).json(err));
-});
-
-async function getMaxCounter(db) {
-  return await db("Szablony")
-    .max("KodSzablonu", { as: "maxcounter" })
-    .first()
-    .then(response => {
-      const { maxcounter } = response;
-      return maxcounter;
-    });
-}
+app.post("/szablon", szablon.addSzablon(mysql.db));
 
 app.delete("/szablon", szablon.handleDelete(mysql.db));
 

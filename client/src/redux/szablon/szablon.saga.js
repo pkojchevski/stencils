@@ -8,7 +8,6 @@ import {
   getAllSzablonsError,
   updateSzablonSuccess,
   updateSzablonFailure,
-  getAllSzablonsStart,
   addSzablonSuccess,
   addSzablonError,
   deleteSzablonError,
@@ -18,7 +17,15 @@ import {
   storeSzablonSuccess,
   storeSzablonError,
   getSzablonForPcbError,
-  getSzablonForPcbSuccess
+  getSzablonForPcbSuccess,
+  getSzablonPageSuccess,
+  getSzablonPageError,
+  getSzablonCountSuccess,
+  getSzablonCountError,
+  getSzablonAfterUpdateSuccess,
+  getSzablonAfterUpdateError,
+  getSzablonAfterUpdateStart,
+  getSzablonPageStart
 } from "./szablon.action";
 
 export function* fetchSzablonyAsync() {
@@ -40,12 +47,12 @@ export function* fetchSablonyStart() {
   );
 }
 
-export function* updateSzablonAsync({ payload: szablon }) {
+export function* updateSzablonAsync({ payload: { szablon, page } }) {
   try {
     const response = yield API.put(`szablon/${szablon.id}`, szablon);
     if (response.status === 200) {
       yield put(updateSzablonSuccess());
-      yield put(getAllSzablonsStart());
+      yield put(getSzablonPageStart(page));
     }
   } catch (err) {
     yield put(updateSzablonFailure(err));
@@ -59,12 +66,13 @@ export function* onUpdateSzablonStart() {
   );
 }
 
-export function* addSzablonAsync({ payload: szablon }) {
+export function* addSzablonAsync({ payload: { szablon, page } }) {
   try {
     const response = yield API.post("szablon", szablon);
     if (response.status === 200) {
+      const id = response.data;
       yield put(addSzablonSuccess());
-      yield put(getAllSzablonsStart());
+      yield put(getSzablonAfterUpdateStart(id));
     }
   } catch (err) {
     yield put(addSzablonError);
@@ -75,12 +83,14 @@ export function* onAddSzablonStart() {
   yield takeLatest(SzablonyActionTypes.ADD_SZABLON_START, addSzablonAsync);
 }
 
-export function* deleteSzablonAsync({ payload: szablon }) {
+export function* deleteSzablonAsync({ payload: { szablonForDelete, page } }) {
   try {
-    const response = yield API.delete("szablon", { data: { id: szablon.id } });
+    const response = yield API.delete("szablon", {
+      data: { id: szablonForDelete.id }
+    });
     if (response.status === 200) {
       yield put(deleteSzablonSuccess());
-      yield put(getAllSzablonsStart());
+      yield put(getSzablonPageStart(page));
     }
   } catch (err) {
     yield put(deleteSzablonError(err));
@@ -113,12 +123,13 @@ export function* onSearchSzablonTableStart() {
   );
 }
 
-export function* onStoreSzablonAsync({ payload: szablon }) {
+export function* onStoreSzablonAsync({ payload: { szablon } }) {
   try {
     const response = yield API.post("store", szablon);
+    const id = response.data;
     if (response.status === 200) {
       yield put(storeSzablonSuccess());
-      yield put(getAllSzablonsStart());
+      yield put(getSzablonAfterUpdateStart(id));
     }
   } catch (err) {
     yield put(storeSzablonError(err));
@@ -151,6 +162,63 @@ export function* onGetSzablonForPcb() {
   );
 }
 
+export function* onGetSzablonPageAsync({ payload: page }) {
+  try {
+    let response = yield API.get(`szablony/pages/${page}`);
+    if (response.status === 200) {
+      let szablony = response.data;
+      yield put(getSzablonPageSuccess(szablony));
+    }
+  } catch (err) {
+    yield put(getSzablonPageError());
+  }
+}
+
+export function* onGetSzablonPage() {
+  yield takeLatest(
+    SzablonyActionTypes.GET_SZABLON_PAGE_START,
+    onGetSzablonPageAsync
+  );
+}
+
+export function* onGetSzablonCountAsync() {
+  try {
+    let response = yield API.get(`szablony/count`);
+    if (response.status === 200) {
+      let count = response.data;
+      yield put(getSzablonCountSuccess(count));
+    }
+  } catch (err) {
+    yield put(getSzablonCountError());
+  }
+}
+
+export function* onGetSzablonCount() {
+  yield takeLatest(
+    SzablonyActionTypes.GET_SZABLON_COUNT_START,
+    onGetSzablonCountAsync
+  );
+}
+
+export function* onGetSzablonAfterUpdateAsync({ payload: id }) {
+  try {
+    let response = yield API.get(`szablon/${id}`);
+    if (response.status === 200) {
+      let szablon = response.data;
+      yield put(getSzablonAfterUpdateSuccess(szablon));
+    }
+  } catch (err) {
+    yield put(getSzablonAfterUpdateError(err));
+  }
+}
+
+export function* onGetSzablonAfterUpdate() {
+  yield takeLatest(
+    SzablonyActionTypes.GET_SZABLON_AFTER_UPDATE_START,
+    onGetSzablonAfterUpdateAsync
+  );
+}
+
 export function* szablonSagas() {
   yield all([
     call(fetchSablonyStart),
@@ -159,6 +227,9 @@ export function* szablonSagas() {
     call(onDeleteSzablonStart),
     call(onSearchSzablonTableStart),
     call(onStoreSzablon),
-    call(onGetSzablonForPcb)
+    call(onGetSzablonForPcb),
+    call(onGetSzablonPage),
+    call(onGetSzablonCount),
+    call(onGetSzablonAfterUpdate)
   ]);
 }

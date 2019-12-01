@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
-import classnames from "classnames";
-
 import "./signin.styles.scss";
 import FormInput from "../../components/form-input/form-input.component";
 

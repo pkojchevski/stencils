@@ -12,10 +12,14 @@ import { COLUMN_DATA } from "../../model/szablony";
 
 import { createStructuredSelector } from "reselect";
 
-import { selectSzablony } from "../../redux/szablon/szablon.selector";
+import {
+  selectSzablony,
+  selectPage
+} from "../../redux/szablon/szablon.selector";
 import {
   getSzablon,
-  storeSzablonStart
+  storeSzablonStart,
+  getSzablonPageStart
 } from "../../redux/szablon/szablon.action";
 
 import { formatDate } from "../../mysql-utils/mysql-utils";
@@ -26,9 +30,11 @@ const SzablonTable = ({
   getSzablon,
   toggleDeleteModal,
   toggleEditModal,
-  storeSzablonStart
+  storeSzablonStart,
+  page
 }) => {
   const handleEditClick = szablon => {
+    if (!szablon.KodSzablonu) return;
     getSzablon({
       ...szablon,
       Data_przyjecia: formatDate(szablon.Data_przyjecia)
@@ -37,12 +43,15 @@ const SzablonTable = ({
   };
 
   const handleDeleteClick = szablon => {
+    if (!szablon.KodSzablonu) return;
     getSzablon(szablon);
     toggleDeleteModal();
   };
 
   const handleStoreClick = szablon => {
-    storeSzablonStart(szablon);
+    if (szablon.storePosition === 1) return;
+
+    storeSzablonStart({ szablon: { ...szablon, storedPosition: true }, page });
   };
 
   return (
@@ -75,8 +84,8 @@ const SzablonTable = ({
                       <EditIcon
                         onClick={() => handleEditClick(column)}
                         style={{
-                          width: "25px",
-                          height: "25px",
+                          width: "20px",
+                          height: "20px",
                           cursor: "pointer"
                         }}
                       />
@@ -86,22 +95,22 @@ const SzablonTable = ({
                     <DeleteIcon
                       onClick={() => handleDeleteClick(column)}
                       style={{
-                        width: "25px",
-                        height: "25px",
+                        width: "20px",
+                        height: "20px",
                         cursor: "pointer"
                       }}
                     />
                   </td>
                   <td>
                     <div>
-                      {column.Pozycja ? (
-                        <StoredIcon style={{ width: "25px", height: "25px" }} />
+                      {column.storedPosition === 1 ? (
+                        <StoredIcon style={{ width: "20px", height: "20px" }} />
                       ) : (
                         <StoreIcon
                           onClick={() => handleStoreClick(column)}
                           style={{
-                            width: "25px",
-                            height: "25px",
+                            width: "20px",
+                            height: "20px",
                             cursor: "pointer"
                           }}
                         />
@@ -118,12 +127,14 @@ const SzablonTable = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  szablony: selectSzablony
+  szablony: selectSzablony,
+  page: selectPage
 });
 
 const mapDispatchToProps = dispatch => ({
   getSzablon: szablon => dispatch(getSzablon(szablon)),
-  storeSzablonStart: szablon => dispatch(storeSzablonStart(szablon))
+  storeSzablonStart: szablon => dispatch(storeSzablonStart(szablon)),
+  getSzablonPageStart: page => dispatch(getSzablonPageStart(page))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SzablonTable);

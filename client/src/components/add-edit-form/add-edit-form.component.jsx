@@ -17,7 +17,10 @@ import {
   AddEditFormButtons
 } from "./add-edit-form.styles";
 
-import { selectSzablonForEdit } from "../../redux/szablon/szablon.selector";
+import {
+  selectSzablonForEdit,
+  selectPage
+} from "../../redux/szablon/szablon.selector";
 
 import FormInput from "../form-input/form-input.component";
 import { ReactComponent as OkIcon } from "../../assets/icons/ok.svg";
@@ -26,7 +29,8 @@ import { isEmptyObj } from "../../utility/utility";
 import {
   updateSzablonStart,
   getAllSzablonsStart,
-  addSzablonStart
+  addSzablonStart,
+  getSzablonPageStart
 } from "../../redux/szablon/szablon.action";
 
 registerLocale("pl", pl);
@@ -36,7 +40,9 @@ const AddEditForm = ({
   updateSzablonStart,
   isEdit,
   addSzablonStart,
-  toggle
+  toggle,
+  page,
+
 }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [szablon, setSzablon] = useState({ ...szablonForEdit });
@@ -47,9 +53,9 @@ const AddEditForm = ({
   const handleSubmit = e => {
     e.preventDefault();
     if (isEdit) {
-      updateSzablonStart(szablon);
+      updateSzablonStart({ szablon, page });
     } else {
-      addSzablonStart(szablon);
+      addSzablonStart({ szablon: { ...szablon, storedPosition: 0 }, page });
     }
     toggle();
   };
@@ -89,22 +95,6 @@ const AddEditForm = ({
               label="Name"
               required
             />
-            {/* <FormInput
-            name="KodSzablonu"
-            type="text"
-            value={szablon.KodSzablonu}
-            onChange={e => handleChange(e)}
-            label="Kod szablonu"
-            required
-          /> */}
-            {/* <FormInput
-            name="Pozycja"
-            type="text"
-            onChange={e => handleChange(e)}
-            value={szablon.Pozycja}
-            label="Position"
-            required
-          /> */}
             <FormSelect
               name="Strona"
               onChange={e => handleChange(e)}
@@ -124,13 +114,6 @@ const AddEditForm = ({
               label="Pcb"
               required
             />
-            {/* <DatePickerInput
-              name="Data_przyjecia"
-              date={szablon.Data_przyjecia}
-              onChange={e => handleChange(e)}
-              value={szablon.Data_przyjecia}
-              label="date"
-            /> */}
             <DatePicker
               selected={szablon.Data_przyjecia}
               onChange={e => setDateOnDatePicker(e)}
@@ -147,7 +130,6 @@ const AddEditForm = ({
               onChange={e => handleChange(e)}
               value={szablon.Uwagi}
               label="Comment"
-              required
             />
             <AddEditFormButtons>
               <button type="button">
@@ -168,16 +150,15 @@ const AddEditForm = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  szablonForEdit: selectSzablonForEdit
+  szablonForEdit: selectSzablonForEdit,
+  page: selectPage
 });
 
 const mapDispatchToProps = dispatch => ({
   updateSzablonStart: szablon => dispatch(updateSzablonStart(szablon)),
   getAllSzablonsStart: () => dispatch(getAllSzablonsStart()),
-  addSzablonStart: szablon => dispatch(addSzablonStart(szablon))
+  addSzablonStart: szablon => dispatch(addSzablonStart(szablon)),
+  getSzablonPageStart: page => dispatch(getSzablonPageStart(page))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddEditForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEditForm);

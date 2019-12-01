@@ -60,10 +60,10 @@ const Header = ({ path, isAuth, initials }) => {
     setSigninToggle(!signinToggle);
   };
 
-  const handleAvatarClick = () => {
-    console.log("handleSignout");
-    signoutStart();
-  };
+  // const handleAvatarClick = () => {
+  //   console.log("handleSignout");
+  //   signoutStart();
+  // };
 
   return (
     <div className="header">

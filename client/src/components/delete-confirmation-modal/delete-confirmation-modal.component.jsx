@@ -11,15 +11,19 @@ import { ReactComponent as CancelIcon } from "../../assets/icons/cancel.svg";
 
 import { deleteSzablonStart } from "../../redux/szablon/szablon.action";
 
-import { selectSzablonForEdit } from "../../redux/szablon/szablon.selector";
+import {
+  selectSzablonForEdit,
+  selectPage
+} from "../../redux/szablon/szablon.selector";
 
 const DeleteConfirmation = ({
   szablonForDelete,
   deleteSzablonStart,
-  toggle
+  toggle,
+  page
 }) => {
   const handleOkClick = () => {
-    deleteSzablonStart(szablonForDelete);
+    deleteSzablonStart({ szablonForDelete, page });
     toggle();
   };
 
@@ -34,11 +38,11 @@ const DeleteConfirmation = ({
       <div className="delete-confirmation-modal-buttons">
         {/* <CancelIcon style={{ width: "20px" }} onClick={handleClose} /> */}
         <CancelIcon
-          style={{ width: "25px", marginLeft: "10px" }}
+          style={{ width: "25px", marginLeft: "10px", cursor: "pointer" }}
           onClick={toggle}
         />
         <OkIcon
-          style={{ width: "25px", marginLeft: "10px" }}
+          style={{ width: "25px", marginLeft: "10px", cursor: "pointer" }}
           onClick={handleOkClick}
         />
       </div>
@@ -47,14 +51,12 @@ const DeleteConfirmation = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  szablonForDelete: selectSzablonForEdit
+  szablonForDelete: selectSzablonForEdit,
+  page: selectPage
 });
 
 const mapDispatchToProps = dispatch => ({
   deleteSzablonStart: szablon => dispatch(deleteSzablonStart(szablon))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DeleteConfirmation);
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteConfirmation);

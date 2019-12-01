@@ -31,3 +31,18 @@ export const selectSzablonForPcb = createSelector(
   [selectSzablon],
   szablon => szablon.szablonyForPcb
 );
+
+export const selectSzablonCount = createSelector(
+  [selectSzablon],
+  szablon => szablon.count
+);
+
+export const selectMaxPages = createSelector(
+  [selectSzablon],
+  szablon => szablon.maxPages
+);
+
+export const selectPage = createSelector(
+  [selectSzablon],
+  szablon => szablon.page
+);

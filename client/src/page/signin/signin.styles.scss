@@ -10,7 +10,7 @@
   & .signin-form-page {
     padding: 30px;
     margin: 70px auto;
-    width: 40%;
+    width: 350px;
     border: 1px solid $primary-blue;
     box-shadow: inset 0 0 25px #00918e;
     border-top-right-radius: 20px;
@@ -36,5 +36,11 @@
         }
       }
     }
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .signin-form-page {
+    width: 350px;
   }
 }

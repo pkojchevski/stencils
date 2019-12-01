@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 import {
   getAllSzablonsStart,
   getSzablon,
-  searchSzablonsFromTableStart
+  searchSzablonsFromTableStart,
+  getSzablonPageStart,
+  getSzablonCountStart
 } from "../../redux/szablon/szablon.action";
 
 import SearchInput from "../../components/search-input/search-input.component";
@@ -20,17 +22,18 @@ import { ReactComponent as AddIcon } from "../../assets/icons/plus.svg";
 import SzablonTableContainer from "../../components/szablon-table/szablon-table.container";
 import useToggle from "../../components/hooks/useToggle";
 
-import { useSpring, animated } from "react-spring";
+import TablePaginator from "../../components/table-paginator/table-paginator.component";
 
 const TablePage = ({
-  getAllSzablonsStart,
   getSzablon,
   searchSzablonsFromTableStart,
-  szablony
+  getSzablonPageStart,
+  getSzablonCountStart
 }) => {
   useEffect(() => {
-    getAllSzablonsStart();
-  }, [getAllSzablonsStart]);
+    getSzablonPageStart(1);
+    getSzablonCountStart();
+  }, [getSzablonPageStart, getSzablonCountStart]);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -93,6 +96,7 @@ const TablePage = ({
           toggleDeleteModal={toggleDelete}
           toggleEditModal={toggleAddEdit}
         />
+        <TablePaginator />
       </div>
     </div>
   );
@@ -100,12 +104,11 @@ const TablePage = ({
 
 const mapDispatchToProps = dispatch => ({
   getAllSzablonsStart: () => dispatch(getAllSzablonsStart()),
+  getSzablonPageStart: page => dispatch(getSzablonPageStart(page)),
+  getSzablonCountStart: () => dispatch(getSzablonCountStart()),
   getSzablon: szablon => dispatch(getSzablon(szablon)),
   searchSzablonsFromTableStart: searchValue =>
     dispatch(searchSzablonsFromTableStart(searchValue))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(TablePage);
+export default connect(null, mapDispatchToProps)(TablePage);
