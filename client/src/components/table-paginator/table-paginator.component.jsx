@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { TweenMax, Sine } from "gsap/all";
+import { TweenMax, Sine, CSSPlugin } from "gsap/all";
 
 import "./table-paginator.styles.scss";
 
