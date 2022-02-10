@@ -11,7 +11,7 @@
     "immutability-helper": "^3.0.1",
     "immutable": "^4.0.0-rc.12",
     "jwt-decode": "^2.2.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "path": "^0.12.7",
     "react": "^16.10.2",
     "react-bootstrap": "^1.0.0-beta.14",
