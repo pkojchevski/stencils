@@ -1,3 +1,2 @@
 # stencils
-React redux app with sagas
-and MY SQL
+React redux app with sagas, NODE, MY SQL
